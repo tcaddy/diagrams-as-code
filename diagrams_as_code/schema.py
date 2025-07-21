@@ -50,6 +50,7 @@ class YamlDiagramResource(BaseModel):
     type: str
     of: list[YamlDiagramResource] | None = []
     relates: list[YamlDiagramResourceRelationship] | None = []
+    src: str | None = None
 
 
 class YamlDiagramResourceRelationship(BaseModel):

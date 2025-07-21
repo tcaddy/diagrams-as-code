@@ -13,6 +13,8 @@ from diagrams import (
     Node,
 )
 
+from diagrams.custom import Custom
+
 from diagrams_as_code.enums import (
     ServiceResourceType,
     RelationDirection,
@@ -47,9 +49,21 @@ def get_diagram_node_class(path: str) -> Node:
     Returns:
         The node's class as a `Node`.
     """
-    provider, resource, service = path.split('.')
+    items = path.split('.')
+    resource = None
+    service = None
+    provider = items[0]
+    str = f'diagrams.{provider}'
+    if items[1] is not None:
+        resource = items[1]
+        str = f'{str}.{items[1]}'
+    if items[2] is not None:
+        service = items[2]
 
-    module = importlib.import_module(f'diagrams.{provider}.{resource}')
+    module = importlib.import_module(str)
+    if service is None:
+        return module
+
     class_ = getattr(module, service)
 
     return class_
@@ -104,9 +118,29 @@ def process_resource(resource: YamlDiagramResource, parent_id: str, group: Diagr
         for resource_of in resource.of:
             process_resource(resource=resource_of, parent_id=f'{parent_id}.{resource.id}', group=diagram_group)
 
+    if resource.type == ServiceResourceType.CUSTOM.value:
+        custom = Custom(resource.name, resource.src)
+
+        resources.update({
+            f'{parent_id}.{resource.id}': custom,
+        })
+
+        for relation in resource.relates:
+            relationship = Relationship(
+                from_=f'{parent_id}.{resource.id}',
+                to=f'diagram.{relation.to}',
+                direction=relation.direction,
+                label=relation.label,
+                color=relation.color,
+                style=relation.style,
+            )
+
+            relationships.append(relationship)
+
     if (
         resource.type != ServiceResourceType.CLUSTER.value and
-        resource.type != ServiceResourceType.GROUP.value
+        resource.type != ServiceResourceType.GROUP.value and
+        resource.type != ServiceResourceType.CUSTOM.value
     ):
         resource_instance = get_diagram_node_class(path=resource.type)(label=resource.name)
 
