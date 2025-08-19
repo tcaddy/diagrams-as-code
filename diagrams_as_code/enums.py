@@ -11,6 +11,7 @@ class ServiceResourceType(Enum):
 
     CLUSTER = 'cluster'
     GROUP = 'group'
+    CUSTOM = 'custom'
 
 
 class RelationDirection(str, Enum):
