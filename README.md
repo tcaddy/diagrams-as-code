@@ -1,3 +1,9 @@
+This fork provides support for custom icons.  Hopefully
+[this PR](https://github.com/dmytrostriletskyi/diagrams-as-code/pull/9) will be
+merged someday and you won't need this fork.
+
+---
+
 `Diagrams as code`: declarative configurations using `YAML` for drawing cloud system architectures.
 
 [![](https://github.com/dmytrostriletskyi/diagrams-as-code/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/dmytrostriletskyi/diagrams-as-code/actions/workflows/main.yaml)
@@ -76,8 +82,11 @@ As the project uses [Graphviz](https://www.graphviz.org) to render the diagram, 
 After, you can install the project itself with the following command using `pip3`:
 
 ```bash
-$ pip3 install diagrams-as-code
+pip3 install https://github.com/tcaddy/diagrams-as-code/archive/main.zip
 ```
+
+This installation command is inspired by this StackOverflow answer:
+https://stackoverflow.com/a/24811490
 
 ### Examples
 
