@@ -1,3 +1,9 @@
+This fork provides support for custom icons.  Hopefully
+[this PR](https://github.com/dmytrostriletskyi/diagrams-as-code/pull/9) will be
+merged someday and you won't need this fork.
+
+---
+
 `Diagrams as code`: declarative configurations using `YAML` for drawing cloud system architectures.
 
 [![](https://github.com/dmytrostriletskyi/diagrams-as-code/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/dmytrostriletskyi/diagrams-as-code/actions/workflows/main.yaml)
@@ -58,7 +64,6 @@ Currently, the following components are provided:
 ## Roadmap
 
 * Add support of [C4](https://diagrams.mingrammer.com/docs/nodes/c4).
-* Add support of [Custom](https://diagrams.mingrammer.com/docs/nodes/custom).
 * Add IDEs plugins and/or web user interface for live editing.
 * Add the `JSON Schema` to [Json Schema Store](https://github.com/fox-forks/schemastore).
 * Research Confluence integration to update images from the CI-builds directly.
@@ -77,8 +82,11 @@ As the project uses [Graphviz](https://www.graphviz.org) to render the diagram, 
 After, you can install the project itself with the following command using `pip3`:
 
 ```bash
-$ pip3 install diagrams-as-code
+pip3 install https://github.com/tcaddy/diagrams-as-code/archive/main.zip
 ```
+
+This installation command is inspired by this StackOverflow answer:
+https://stackoverflow.com/a/24811490
 
 ### Examples
 
@@ -363,6 +371,7 @@ Basically, to recap and also clarify:
 | `id`      | String | Yes      | -                                                                                                   | -       | A unique identifier of the resource.     |
 | `name`    | String | Yes      | -                                                                                                   | -       | A name of the resource.                  |
 | `type`    | String | Yes      | One of the [those](https://github.com/dmytrostriletskyi/diagrams-as-code/tree/main/docs/resources). | -       | A type of the resource.                  |
+| `src`     | String | No       | When `type` is set to `custom` this will provide the source of the custom icon/image                | -       | A path to a custom icon/image.           |
 | `relates` | Object | No       | -                                                                                                   | -       | A relationship to a resource or a group. |
 
 This is the table of all available types by a category:
